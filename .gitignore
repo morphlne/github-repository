@@ -1,2 +1,4 @@
 .idea/
 target/
+.openapi-generator/
+github-repository-api/src/main/java/

@@ -1,0 +1,77 @@
+openapi: 3.0.3
+info:
+  title: Github Repository API
+  version: 0.0.1
+servers:
+  - url: http://localhost:8080
+paths:
+  /repositories:
+    get:
+      summary: Returns list of repositories by username
+      tags:
+        - repository
+      operationId: getRepositoriesByUsername
+      parameters:
+        - in: query
+          name: username
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          $ref: '#/components/responses/RepositoryResponse'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+components:
+  schemas:
+    RepositoryList:
+      properties:
+        login:
+          type: string
+        repositories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Repository'
+    Repository:
+      type: object
+      properties:
+        repositoryName:
+          type: string
+        branches:
+          type: array
+          items:
+            $ref: '#/components/schemas/Branch'
+    Branch:
+      type: object
+      properties:
+        branchName:
+          type: string
+        lastCommitSha:
+          type: string
+    Error:
+      properties:
+        status:
+          type: integer
+        message:
+          type: string
+  responses:
+    RepositoryResponse:
+      description: List of repositories
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RepositoryList'
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ServerError:
+      description: Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
