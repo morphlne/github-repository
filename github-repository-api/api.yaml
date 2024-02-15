@@ -28,8 +28,6 @@ components:
   schemas:
     RepositoryList:
       properties:
-        login:
-          type: string
         repositories:
           type: array
           items:
@@ -37,6 +35,8 @@ components:
     Repository:
       type: object
       properties:
+        repositoryOwnerLogin:
+          type: string
         repositoryName:
           type: string
         branches:
