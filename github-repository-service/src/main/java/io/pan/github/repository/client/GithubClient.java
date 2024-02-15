@@ -15,7 +15,13 @@ import java.util.List;
 @Component
 public class GithubClient implements RepositorySource {
 
-    private final WebClient webClient = WebClient.create("https://api.github.com");
+    private final WebClient webClient;
+
+    public GithubClient(
+            WebClient webClient
+    ) {
+        this.webClient = webClient;
+    }
 
     @Override
     public Mono<List<RepositoryDTO>> getRepositories(String username) {
