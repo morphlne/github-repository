@@ -1,2 +1,8 @@
 logging.level:
   org.zalando.logbook: trace
+
+github:
+  header:
+    auth:
+    accept: application/vnd.github+json
+    apiVersion: 2022-11-28
