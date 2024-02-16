@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.server.MissingRequestValueException;
 
 @ControllerAdvice
 public class RepositoryExceptionHandler {
@@ -23,6 +24,16 @@ public class RepositoryExceptionHandler {
                 .body(new Error()
                         .status(exception.getStatus().value())
                         .message("Github API error: " + exception.getMessage())
+                );
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<Error> handleMissingRequestValueException(MissingRequestValueException exception) {
+        logger.error("Missing required parameter: " + exception.getMessage());
+        return ResponseEntity.status(400)
+                .body(new Error()
+                        .status(400)
+                        .message(exception.getMessage())
                 );
     }
 
