@@ -27,7 +27,10 @@ public class GithubClient implements RepositorySource {
     public Mono<List<RepositoryDTO>> getRepositories(String username) {
         return webClient
                 .get()
-                .uri("/users/{username}/repos", username)
+                .uri(uriBuilder -> uriBuilder
+                        .path("/users/{username}/repos")
+                        .queryParam("per_page", 100)
+                        .build(username))
                 .retrieve()
                 .onStatus(
                         HttpStatusCode::isError,
@@ -39,7 +42,10 @@ public class GithubClient implements RepositorySource {
     @Override
     public Mono<List<BranchDTO>> getBranches(String username, String repository) {
         return webClient.get()
-                .uri("/repos/{username}/{repository}/branches", username, repository)
+                .uri(uriBuilder -> uriBuilder
+                        .path("/repos/{username}/{repository}/branches")
+                        .queryParam("per_page", 100)
+                        .build(username, repository))
                 .retrieve()
                 .onStatus(
                         HttpStatusCode::isError,

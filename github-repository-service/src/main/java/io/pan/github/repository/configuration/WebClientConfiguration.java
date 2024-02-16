@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.zalando.logbook.Logbook;
 import org.zalando.logbook.core.DefaultHttpLogWriter;
@@ -23,6 +24,10 @@ public class WebClientConfiguration {
             @Value("${github.header.accept}") String accept,
             @Value("${github.header.apiVersion}") String apiVersion
     ) {
+        var twoMegabytes = 2 * 1024 * 1024;
+        var strategies = ExchangeStrategies.builder()
+                .codecs(codecs -> codecs.defaultCodecs().maxInMemorySize(twoMegabytes))
+                .build();
         return WebClient.builder()
                 .baseUrl("https://api.github.com")
                 .defaultHeaders(headers -> {
@@ -32,6 +37,7 @@ public class WebClientConfiguration {
                     headers.setAccept(List.of(MediaType.valueOf(accept)));
                     headers.set("X-GitHub-Api-Version", apiVersion);
                 })
+                .exchangeStrategies(strategies)
                 .filter(new LogbookExchangeFilterFunction(jsonLogbook()))
                 .build();
     }
