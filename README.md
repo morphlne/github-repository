@@ -35,6 +35,10 @@ Response example
 }
 ```
 
+### Swagger UI
+
+Swagger UI is accessible on http://localhost:8080/swagger-ui.html and OpenAPI spec on http://localhost:8080/api.yaml
+
 ### Project structure
 
 Project consists of 2 submodules:
@@ -81,5 +85,4 @@ More about authentication on [docs.github.com](https://docs.github.com/en/rest/a
 * Retry on error & circuit breaker
 * Implement cache 
 * Username validation ([pattern](https://github.com/shinnn/github-username-regex))
-* Display Swagger UI
 * Unit & integration tests

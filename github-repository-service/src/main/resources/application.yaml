@@ -6,3 +6,7 @@ github:
     auth:
     accept: application/vnd.github+json
     apiVersion: 2022-11-28
+
+springdoc:
+  swagger-ui:
+    url: api.yaml

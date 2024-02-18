@@ -2,3 +2,4 @@
 target/
 .openapi-generator/
 github-repository-api/src/main/java/
+github-repository-service/src/main/resources/static/api.yaml
